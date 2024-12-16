@@ -4,15 +4,10 @@ import { useState } from "react";
 //create your first component
 const Home = () => {
 	const [listElement, setListElement] = useState([]);
-	const [inputChange, setInputChange] = useState("");
 
-	const handleChange = (e) => {
-		setInputChange(e.target.value);
-	};
 	const handleNewTask = (e) => {
 		if (e.key === "Enter" && e.target.value !== "") {
 			setListElement([...listElement, e.target.value]);
-			setInputChange("");
 			e.target.value = "";
 		}
 	};
@@ -33,7 +28,6 @@ const Home = () => {
 					aria-label="Username"
 					aria-describedby="basic-addon1"
 					onKeyDown={handleNewTask}
-					onChange={handleChange}
 				/>
 			</div>
 			{listElement.map((element) => {
