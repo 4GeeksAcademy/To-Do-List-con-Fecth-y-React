@@ -18,14 +18,14 @@ const Home = () => {
 		setListElement(newLi);
 	};
 	return (
-		<div className="container d-flex flex-column align-items-center">
+		<div className="container d-flex flex-column m-2 w-50 align-items-center p-5">
 			<h1>To-Do</h1>
-			<div className="input-group mb-3 w-50">
+			<div className="input-group w-50">
 				<input
 					type="text"
 					className="form-control"
-					placeholder="Username"
-					aria-label="Username"
+					placeholder="Tienes alguna tarea pendiente?"
+					aria-label="Tienes alguna tarea pendiente?"
 					aria-describedby="basic-addon1"
 					onKeyDown={handleNewTask}
 				/>
@@ -35,13 +35,15 @@ const Home = () => {
 					<ul className="list-group w-50 d-flex justify-content-between">
 						<li className="list-group-item d-flex justify-content-between ">
 							{element}
-							<span onClick={handleClick}>x</span>
+							<span className="button-delete" onClick={handleClick}>
+								x
+							</span>
 						</li>
 					</ul>
 				);
 			})}
 			<div className="list-group w-50">
-				<span className="list-group-item">{listElement.length} CONTADOR</span>
+				<span className="list-group-item counter">{listElement.length} Task </span>
 			</div>
 		</div>
 	);
