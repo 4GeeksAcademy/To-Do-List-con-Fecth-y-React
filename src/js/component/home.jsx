@@ -31,7 +31,7 @@ const Home = () => {
 		myHeaders.append("Content-Type", "application/json");
 
 		const raw = JSON.stringify({
-			label: { task },
+			label: `${task}`,
 			is_done: false
 		});
 
@@ -50,7 +50,7 @@ const Home = () => {
 	// REALIZA EL GET DE LA API AL INICIALIZAR LA APP
 	useEffect(() => {
 		getListElement();
-	}, []);
+	}, [handleNewTask]);
 
 	const handleNewTask = (e) => {
 		if (e.key === "Enter" && e.target.value !== "") {
