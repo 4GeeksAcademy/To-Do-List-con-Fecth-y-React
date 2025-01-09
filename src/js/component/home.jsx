@@ -15,17 +15,18 @@ const Home = () => {
 			.then((result) => setListElement(result.todos))
 			.catch((error) => console.error(error));
 	}
-	function deletListElement(task) {
+
+	function deletListElement(id) {
 		const requestOptions = {
 			method: "DELETE",
 			redirect: "follow"
 		};
 
-		fetch(`https://playground.4geeks.com/todo/todos/${task}`, requestOptions)
-			.then((response) => response.json())
-			.then((result) => console.log(result))
+		fetch(`https://playground.4geeks.com/todo/todos/${id}`, requestOptions)
+			.then((response) => response.text())
 			.catch((error) => console.error(error));
 	}
+
 	function createTask(task) {
 		const myHeaders = new Headers();
 		myHeaders.append("Content-Type", "application/json");
@@ -44,27 +45,25 @@ const Home = () => {
 
 		fetch("https://playground.4geeks.com/todo/todos/PabloQuerales", requestOptions)
 			.then((response) => response.json())
-			.then((result) => console.log(result))
+			.then((result) => setListElement([...listElement, result]))
 			.catch((error) => console.error(error));
 	}
 	// REALIZA EL GET DE LA API AL INICIALIZAR LA APP
 	useEffect(() => {
 		getListElement();
-	}, [handleNewTask]);
+	}, []);
 
 	const handleNewTask = (e) => {
 		if (e.key === "Enter" && e.target.value !== "") {
-			setListElement([...listElement, e.target.value]);
 			createTask(e.target.value);
 			e.target.value = "";
 		}
 	};
-	console.log(listElement);
-
 	const handleClick = (e) => {
 		const newLi = listElement.filter((element) => {
 			return e.target.parentElement.firstChild.textContent !== element;
 		});
+		getListElement();
 		setListElement(newLi);
 		deletListElement(e.target.parentElement.id);
 	};
@@ -84,7 +83,7 @@ const Home = () => {
 			{listElement.map((task) => {
 				return (
 					<ul className="list-group w-50 d-flex justify-content-between">
-						<li className="list-group-item d-flex justify-content-between " key={task.id} id={task.id}>
+						<li className="list-group-item d-flex justify-content-between " id={task.id}>
 							{task.label}
 							<span className="button-delete" onClick={handleClick}>
 								x
