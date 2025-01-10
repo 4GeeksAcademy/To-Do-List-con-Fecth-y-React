@@ -62,11 +62,7 @@ const Home = () => {
 		}
 	};
 	const handleClick = (e) => {
-		const newLi = listElement.filter((element) => {
-			return e.target.parentElement.firstChild.textContent !== element;
-		});
 		getListElement();
-		setListElement(newLi);
 		deletListElement(e.target.parentElement.id);
 	};
 
