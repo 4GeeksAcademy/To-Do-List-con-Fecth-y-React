@@ -62,8 +62,8 @@ const Home = () => {
 		}
 	};
 	const handleClick = (e) => {
-		getListElement();
 		deletListElement(e.target.parentElement.id);
+		getListElement();
 	};
 
 	// REALIZA EL GET DE LA API AL INICIALIZAR LA APP
