@@ -10,14 +10,7 @@ const Home = () => {
 			redirect: "follow"
 		};
 
-		fetch("https://playground.4geeks.com/todo/users/PabloQuerales", requestOptions)
-			.then((response) => {
-				if (response.status !== 400) {
-					console.log("hola LUIS");
-				}
-				return response.json();
-			})
-			.catch((error) => console.error(error));
+		fetch("https://playground.4geeks.com/todo/users/PabloQuerales", requestOptions);
 	}
 	function getListElement() {
 		const requestOptions = {
