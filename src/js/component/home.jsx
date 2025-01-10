@@ -4,6 +4,21 @@ import React, { useState, useEffect } from "react";
 const Home = () => {
 	const [listElement, setListElement] = useState([]);
 
+	function createUser() {
+		const requestOptions = {
+			method: "POST",
+			redirect: "follow"
+		};
+
+		fetch("https://playground.4geeks.com/todo/users/PabloQuerales", requestOptions)
+			.then((response) => {
+				if (response.status !== 400) {
+					console.log("hola LUIS");
+				}
+				return response.json();
+			})
+			.catch((error) => console.error(error));
+	}
 	function getListElement() {
 		const requestOptions = {
 			method: "GET",
@@ -22,9 +37,7 @@ const Home = () => {
 			redirect: "follow"
 		};
 
-		fetch(`https://playground.4geeks.com/todo/todos/${id}`, requestOptions)
-			.then((response) => response.text())
-			.catch((error) => console.error(error));
+		fetch(`https://playground.4geeks.com/todo/todos/${id}`, requestOptions).catch((error) => console.error(error));
 	}
 
 	function createTask(task) {
@@ -48,10 +61,6 @@ const Home = () => {
 			.then((result) => setListElement([...listElement, result]))
 			.catch((error) => console.error(error));
 	}
-	// REALIZA EL GET DE LA API AL INICIALIZAR LA APP
-	useEffect(() => {
-		getListElement();
-	}, []);
 
 	const handleNewTask = (e) => {
 		if (e.key === "Enter" && e.target.value !== "") {
@@ -67,6 +76,13 @@ const Home = () => {
 		setListElement(newLi);
 		deletListElement(e.target.parentElement.id);
 	};
+
+	// REALIZA EL GET DE LA API AL INICIALIZAR LA APP
+	useEffect(() => {
+		createUser();
+		getListElement();
+	}, []);
+
 	return (
 		<div className="container d-flex flex-column m-2 w-50 align-items-center p-5">
 			<h1>To-Do</h1>
@@ -80,18 +96,18 @@ const Home = () => {
 					onKeyDown={handleNewTask}
 				/>
 			</div>
-			{listElement.map((task) => {
-				return (
-					<ul className="list-group w-50 d-flex justify-content-between">
-						<li className="list-group-item d-flex justify-content-between " id={task.id}>
+			<ul className="list-group w-50 d-flex justify-content-between">
+				{listElement.map((task) => {
+					return (
+						<li className="list-group-item d-flex justify-content-between " key={task.id} id={task.id}>
 							{task.label}
 							<span className="button-delete" onClick={handleClick}>
 								x
 							</span>
 						</li>
-					</ul>
-				);
-			})}
+					);
+				})}
+			</ul>
 			<div className="list-group w-50">
 				<span className="list-group-item counter">{listElement.length} Task </span>
 			</div>
