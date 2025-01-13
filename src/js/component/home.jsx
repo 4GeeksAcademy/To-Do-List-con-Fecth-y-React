@@ -10,7 +10,11 @@ const Home = () => {
 			redirect: "follow"
 		};
 
-		fetch("https://playground.4geeks.com/todo/users/PabloQuerales", requestOptions);
+		fetch("https://playground.4geeks.com/todo/users/PabloQuerales", requestOptions).then((response) => {
+			if (response.status == 204) {
+				getListElement();
+			}
+		});
 	}
 	function getListElement() {
 		const requestOptions = {
@@ -30,7 +34,13 @@ const Home = () => {
 			redirect: "follow"
 		};
 
-		fetch(`https://playground.4geeks.com/todo/todos/${id}`, requestOptions).catch((error) => console.error(error));
+		fetch(`https://playground.4geeks.com/todo/todos/${id}`, requestOptions)
+			.then((response) => {
+				if (response.status == 204) {
+					getListElement();
+				}
+			})
+			.catch((error) => console.error(error));
 	}
 
 	function createTask(task) {
@@ -63,7 +73,6 @@ const Home = () => {
 	};
 	const handleClick = (e) => {
 		deletListElement(e.target.parentElement.id);
-		getListElement();
 	};
 
 	// REALIZA EL GET DE LA API AL INICIALIZAR LA APP
